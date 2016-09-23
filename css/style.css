@@ -1,2 +1,112 @@
 /* CSS Document */
+.wrapper {
+  	width:  100%;
+  	height:  100%;
+  	background-color: #fff;
+}
 
+.left-sidebar-wrapper {
+  	width: 240px;
+  	position: fixed;
+  	left: 0;
+  	top: 0;
+  	bottom: 0;
+  	background-color: #000;
+}
+
+.main-wrapper {
+	margin-left: 240px;
+	width: calc(100% - 240px);
+	height: 100vh;
+	background-color: #999;
+	position: relative;
+}
+
+.map-header-wrapper {
+	padding: 12px;	
+	background-color: #222;
+}
+
+#menu-left-sidebar {
+	width: 24px;
+	height: 24px;
+	font-size: 24px;
+	line-height: 24px;
+	color: #fff;
+	font-style: normal;
+}
+
+.sidebar-header {
+	height: 48px;
+    padding: 12px;
+    border-bottom: 1px solid #999;	
+	text-align: center;
+}
+
+.sidebar-title {
+	margin: 0;
+    text-transform: capitalize;
+    font-size: 20px;
+    color: #bbb;
+    font-style: normal;
+    line-height: 24px;	
+}
+
+.sidebar-main {
+	padding: 12px;	
+}
+
+.sidebar-search {
+	padding-bottom: 12px;
+	border-bottom: 1px solid #333;	
+}
+
+#search-box {
+	border-radius: 0;	
+}
+
+#search-btn {
+	font-size: 14px;
+	line-height: 32px;
+	text-align: center;
+	color: #000;
+	width: 34px;
+	background-color: #fff;	
+}
+
+.location-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;	
+}
+
+.location-item {
+	text-transform: capitalize;
+	color: #bbb;
+	font-size: 16px;
+	font-style:normal;
+	height: 48px;
+	padding: 12px;
+	padding-left: 12px;
+	border-bottom: 1px solid #333;	
+	line-height: 24px;
+	cursor: pointer;
+}
+
+
+#menu-left-sidebar:hover {
+	color: #ccc;	
+}
+
+
+#map-main-wrapper {
+	width: 100%;
+	position: relative;
+	height: calc(100% - 48px);
+	background-color: #bbb;	
+}
+
+#map {
+	width: 100%;
+	height: 100%;	
+}
