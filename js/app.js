@@ -220,7 +220,7 @@ function addListItemModel () {
   self.loadList = ko.observableArray(listItem);
 }
 
-ko.applyBindings(new addListItemModel());
+ko.applyBindings(new addListItemModel(), $('.sidebar-content')[0]);
 clickListItem();
 
 function clickListItem() {
@@ -254,10 +254,100 @@ $('#search-btn').click(function () {
 
 // collapsed menu when click to menu button
 $('#menu-left-sidebar').click(function () {
-  console.log('click');
   $('.left-sidebar-wrapper').toggleClass('collapsed');
   $('.main-wrapper').toggleClass('collapsed');
 });
 
 // add wiki to map
-var wikiUrl = 'https://en.wikipedia.org/w/api.php';
+var wikiUrl = 'http://en.wikipedia.org/w/api.php?callback=?';
+var weatherKey = 'e3e78b4fc1bfd8393572c7ef36617823';
+
+// get json from wiki
+function getWiki(item) {
+  $.ajax({
+    url: wikiUrl,
+    data: {
+      action: 'opensearch',
+      search: item,
+      format: 'json'
+    },
+    type: 'GET',
+    dataType: 'json',
+    contentType: "application/json; charset=utf-8",
+    async: false,
+    success: function (responsive) {
+      console.log(responsive);
+      $('#wiki-main').append(wikiDom);
+      //ko.cleanNode($('.sidebar-content')[0]);
+      ko.applyBindings(new addListWikiModel(responsive), $('#wiki-main')[0]);
+    },
+    error: function (err) {
+      console.log(err);
+    }
+  });
+}
+
+//
+var wikiDom = '<ul id="wiki-list" data-bind="foreach: loadWiki">'+
+                '<li class="wiki-item" data-bind="attr: {id: id()}">'+
+                  '<a class="wiki-link" target="_blank" data-bind="text: wikiName, attr: {href: wikiUrl()}"></a>'+
+                '</li>'+
+              '</ul>';
+
+$(document).ready(function () {
+  getWiki('hanoi');
+});
+
+// crate a knocout view is list wikipedia
+function addWikiItem(id, name, url) {
+  console.log(id, name, url);
+  console.log(url);
+  var self = this;
+  self.id = ko.observable(id);
+  self.wikiName = name;
+  self.wikiUrl = ko.observable(url);
+}
+
+function addListWikiModel(wikiList) {
+  console.log(wikiList[1].length);
+  var self = this;
+  var listItem = [];
+  for (var i = 0; i < wikiList[1].length; i++) {
+    listItem.push(new addWikiItem(i, wikiList[1][i], wikiList[3][i]));
+  }
+  self.loadWiki = ko.observableArray(listItem);
+}
+
+$('#wiki-btn').click(function () {
+  $('.right-sidebar-wrapper').toggleClass('collapsed');
+  $('#wiki-btn').toggleClass('collapsed');
+});
+
+
+
+
+/* get temp of location
+var hanoiId = '1581129';
+var openWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
+var openWeatherKey = '939cd051406d39c8efda478355480df2';
+var ortherKey = 'b1b15e88fa797225412429c1c50c122a1';
+function getCurrentTemp() {
+  $.ajax({
+    url: openWeatherUrl,
+    data: {
+      type: 'like',
+      lat: 40.712,
+      lon: -74.00,
+      unit: 'metric',
+      appid: openWeatherKey,
+    },
+    type: 'GET',
+    success: function (responsive) {
+      console.log(responsive);
+      //console.log(responsive.main.temp);
+    },
+    error: function (err) {
+      console.log(err);
+    }
+  });
+}*/

@@ -7,9 +7,8 @@
 <link href="css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="css/style.css" rel="stylesheet" type="text/css">
-<link href="css/style-640.css" rel="stylesheet" media="(max-width: 640px)">
 <script type="text/javascript" src="js/lib/jquery-3.1.0.min.js"></script>
-<script async type="text/javascript" src="js/lib/knockout-3.4.0.js"></script>
+<script type="text/javascript" src="js/lib/knockout-3.4.0.js"></script>
 <script async type="text/javascript" src="js/lib/bootstrap.min.js"></script>
 </head>
 <body>
@@ -52,6 +51,20 @@
         </main>
       </div>
     </div>
+
+    <div id="wiki-btn" class="collapsed">wiki</div>
+    <div id="wiki-main" class="right-sidebar-wrapper collapsed">
+      <h2 class="wiki-title">Wikipedia</h2>
+      <hr>
+      <!--
+      <ul id="wiki-list" data-bind="foreach: loadWiki">
+        <li class="wiki-item">
+          <a target="_blank" data-bind="text: wikiName, attr: {href: wikiUrl()}"></a>
+        </li>
+      </ul>
+      -->
+    </div>
+
     <script async type="text/javascript" src="js/app.js"></script>
     <script async  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANg_mSOV5v0g_EUSHFNHPV_1ghF1834Ec&libraries=geometry&v=3&callback=initMap"></script>
 

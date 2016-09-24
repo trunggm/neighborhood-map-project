@@ -32,7 +32,7 @@
 	padding: 12px;
 	background-color: #222;
 	-webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 #menu-left-sidebar {
@@ -124,6 +124,88 @@
 #pano {
   width: 200px;
   height: 200px;
+}
+
+/* wikipedia view */
+#wiki-btn {
+  position: fixed;
+  background-color: #f00;
+  height: 48px;
+  width: 48px;
+  top: 48px;
+  right: 180px;
+  opacity: .6;
+  z-index: 9999;
+  color: #fff;
+  font-size: 18px;
+  line-height:  46px;
+  text-align: center;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+#wiki-btn:hover {
+  background-color: #ff5722;
+}
+
+.right-sidebar-wrapper {
+  padding: 12px;
+  position:  fixed;
+  height: 560px;
+  width:  180px;
+  background-color: #000;
+  right: 0;
+  top: 48px;
+  z-index:  9999;
+  opacity: .6;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.wiki-title {
+  margin: 0;
+  color: #fff;
+  font-weight: normal;
+}
+
+hr {
+  margin: 12px 0;
+}
+
+.right-sidebar-wrapper.collapsed {
+  right: -180px;
+}
+
+#wiki-btn.collapsed {
+  right: 0;
+}
+
+#wiki-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wiki-item {
+  padding:  12px;
+  font-size: 16px;
+  line-height: 16px;
+  border-bottom: 1px solid #888;
+}
+
+.wiki-link {
+  color: #999;
+  text-decoration: none !important;
+  display: inline-block;
+  width: 132px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+}
+
+.wiki-link:hover, .wiki-link:focus {
+  color: #999;
 }
 
 @media screen and (max-width:720px){
