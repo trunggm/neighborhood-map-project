@@ -211,21 +211,23 @@ function addListItem(name, id) {
   self.idItem = ko.observable(id);
 }
 
-function addListItemModel () {
+var listItem = [];
+for (var i = 0; i < locations.length; i++) {
+  listItem.push(new addListItem(locations[i].title, i));
+}
+
+function addListItemModel (listItem) {
   var self = this;
-  var listItem = [];
-  for (var i = 0; i < locations.length; i++) {
-    listItem.push(new addListItem(locations[i].title, i));
-  }
   self.loadList = ko.observableArray(listItem);
 }
 
-ko.applyBindings(new addListItemModel(), $('.sidebar-content')[0]);
+ko.applyBindings(new addListItemModel(listItem), $('.sidebar-content')[0]);
 clickListItem();
 
 function clickListItem() {
   for (var i = 0; i < locations.length; i++) {
     $('#loc'+i).click(function () {
+      console.log('click');
       var id = Number(this.id.replace('loc', ''));
       populateInfoWindw(markers[id], infowindow);
       toggleBounce(markers[id]);
@@ -237,6 +239,7 @@ function clickListItem() {
 
 // search box
 $('#search-btn').click(function () {
+  var listSearchItem = [];
   var searchItem = $('#search-box').val().toLowerCase();
   for (var i = 0; i < locations.length; i++) {
     var title = locations[i].title.toLowerCase();
@@ -244,6 +247,7 @@ $('#search-btn').click(function () {
       $('#loc'+i).show();
       showMarker(markers[i], map);
       bounds.extend(markers[i].position);
+      listSearchItem.push(new addListItem(locations[i].title, i));
     }
     else {
       $('#loc'+i).hide();
@@ -251,6 +255,12 @@ $('#search-btn').click(function () {
     }
   }
   map.fitBounds(bounds);
+  ko.cleanNode($('.sidebar-content')[0]);
+  ko.applyBindings(new addListItemModel([]), $('.sidebar-content')[0]);
+  $('.location-list').append('<li class="location-item" data-bind="text: name, attr: {id: \'loc\''+' + idItem()}">'+'sieu nhan</li>');
+  ko.cleanNode($('.sidebar-content')[0]);
+  ko.applyBindings(new addListItemModel(listSearchItem), $('.sidebar-content')[0]);
+  clickListItem();
 });
 
 
@@ -279,6 +289,7 @@ function getWiki(item) {
     async: false,
     success: function (responsive) {
       console.log(responsive);
+      $('#wiki-list').remove();
       $('.error').remove();
       $('#wiki-main').append(wikiDom);
       ko.cleanNode( $('#wiki-main')[0]);
