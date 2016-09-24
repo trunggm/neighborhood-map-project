@@ -1,11 +1,7 @@
 // JavaScript Document
 // Map view in site
-var map;
+var map, infowindow, bounds;
 var markers = [];
-
-// infowindow
-var infowindow = new google.maps.InfoWindow();
-var bounds = new google.maps.LatLngBounds();
 
 // List location
 var locations = [
@@ -85,16 +81,20 @@ var locations = [
 
 // init map to view
 function initMap() {
+  console.log('start');
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 21.027849605476565, lng: 105.85228443145752},
     zoom: 16
   });
 
+  infowindow = new google.maps.InfoWindow();
+  bounds = new google.maps.LatLngBounds();
+
   // create marker
   createMarkers(map);
 }
 
-initMap();
+
 
 //create marker and push to markers
 function createMarkers(map) {
@@ -260,4 +260,4 @@ $('#menu-left-sidebar').click(function () {
 });
 
 // add wiki to map
-var wikiUrl = '';
+var wikiUrl = 'https://en.wikipedia.org/w/api.php';
