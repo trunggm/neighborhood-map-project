@@ -283,6 +283,7 @@ function getWiki(item) {
     },
     error: function (err) {
       console.log(err);
+      $('#wiki-main').append('<div class="error">Cannot load wiki for this location</div>')
     }
   });
 }
@@ -295,7 +296,7 @@ var wikiDom = '<ul id="wiki-list" data-bind="foreach: loadWiki">'+
               '</ul>';
 
 $(document).ready(function () {
-  getWiki('hanoi');
+  getWiki('den ngoc son');
 });
 
 // crate a knocout view is list wikipedia
@@ -326,7 +327,7 @@ $('#wiki-btn').click(function () {
 
 
 
-/* get temp of location
+/* get temp of location*/
 var hanoiId = '1581129';
 var openWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
 var openWeatherKey = '939cd051406d39c8efda478355480df2';
@@ -336,8 +337,8 @@ function getCurrentTemp() {
     url: openWeatherUrl,
     data: {
       type: 'like',
-      lat: 40.712,
-      lon: -74.00,
+      lat: 21.0311149,
+      lon: 105.8524206,
       unit: 'metric',
       appid: openWeatherKey,
     },
@@ -350,4 +351,6 @@ function getCurrentTemp() {
       console.log(err);
     }
   });
-}*/
+}
+
+getCurrentTemp();

@@ -152,7 +152,7 @@
 .right-sidebar-wrapper {
   padding: 12px;
   position:  fixed;
-  height: 560px;
+  height: auto;
   width:  180px;
   background-color: #000;
   right: 0;
