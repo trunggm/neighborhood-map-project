@@ -11,52 +11,49 @@
 <script type="text/javascript" src="js/lib/jquery-3.1.0.min.js"></script>
 <script async type="text/javascript" src="js/lib/knockout-3.4.0.js"></script>
 <script async type="text/javascript" src="js/lib/bootstrap.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANg_mSOV5v0g_EUSHFNHPV_1ghF1834Ec&v=3"></script>
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyANg_mSOV5v0g_EUSHFNHPV_1ghF1834Ec&libraries=geometry&v=3"></script>
 <script async defer type="text/javascript" src="js/app.js"></script>
 </head>
 <body>
     <div class="wrapper">
     	<!--start left sidebar-->
-      	<div class="left-sidebar-wrapper">
-			<div class="sidebar-header">
-            	<h1 class="sidebar-title">
-                	bart locations
-                </h1>
-            </div>
-            <div class="sidebar-main">
-            	<!--left sidebar search box-->
-                <div class="sidebar-search input-group">
-                    <input type="text" class="form-control" placeholder="Search" id="search-box">
-                    <span class="input-group-btn" id="search-btn"><i class="fa fa-search"></i></span>
-                </div>
+      <div class="left-sidebar-wrapper">
+	    	<div class="sidebar-header">
+        	<h1 class="sidebar-title">
+            	ha noi locations
+          </h1>
+        </div>
+        <div class="sidebar-main">
+        	<!--left sidebar search box-->
+          <div class="sidebar-search input-group">
+            <input type="text" class="form-control" placeholder="Search" id="search-box">
+            <span class="input-group-btn" id="search-btn"><i class="fa fa-search"></i></span>
+          </div>
 
-                <!--left sidebar list locations-->
-                <div class="sidebar-content">
-                    <ul class="location-list">
-                    	<li class="location-item">
-                        	sieu nhan
-                        </li>
-                    	<li class="location-item">
-                        	sieu nhan 2
-                        </li>
-                    </ul>
-                </div>
-           	</div>
+          <!--left sidebar list locations-->
+          <div class="sidebar-content">
+            <ul class="location-list" data-bind="foreach: loadList">
+            	<li class="location-item" data-bind="text: name, attr: {id: 'loc' + idItem()}">
+                	sieu nhan
+                </li>
+            </ul>
+          </div>
+       	</div>
      	</div>
 
 
-        <div class="main-wrapper">
-            <header id="header-wrapper" class="map-header-wrapper">
-            	<div href="#" id="menu-left-sidebar">
-                	<i class="fa fa-bars"></i>
-                </div>
-            </header>
-            <main id="map-main-wrapper">
-            	<!--view map is here-->
-            	<div id="map"></div>
-            </main>
-        </div>
+      <div class="main-wrapper">
+        <header id="header-wrapper" class="map-header-wrapper">
+        	<div href="#" id="menu-left-sidebar">
+            	<i class="fa fa-bars"></i>
+          </div>
+        </header>
+        <main id="map-main-wrapper">
+        	<!--view map is here-->
+        	<div id="map"></div>
+        </main>
+      </div>
     </div>
-    
+
 </body>
 </html>

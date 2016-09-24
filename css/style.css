@@ -12,19 +12,27 @@
   	top: 0;
   	bottom: 0;
   	background-color: #000;
+	-webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .main-wrapper {
+	top: -48px;
 	margin-left: 240px;
 	width: calc(100% - 240px);
 	height: 100vh;
 	background-color: #999;
 	position: relative;
+	-webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 .map-header-wrapper {
-	padding: 12px;	
+	position: relative;
+	padding: 12px;
 	background-color: #222;
+	-webkit-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 #menu-left-sidebar {
@@ -39,7 +47,7 @@
 .sidebar-header {
 	height: 48px;
     padding: 12px;
-    border-bottom: 1px solid #999;	
+    border-bottom: 1px solid #999;
 	text-align: center;
 }
 
@@ -49,20 +57,20 @@
     font-size: 20px;
     color: #bbb;
     font-style: normal;
-    line-height: 24px;	
+    line-height: 24px;
 }
 
 .sidebar-main {
-	padding: 12px;	
+	padding: 12px;
 }
 
 .sidebar-search {
 	padding-bottom: 12px;
-	border-bottom: 1px solid #333;	
+	border-bottom: 1px solid #333;
 }
 
 #search-box {
-	border-radius: 0;	
+	border-radius: 0;
 }
 
 #search-btn {
@@ -71,13 +79,14 @@
 	text-align: center;
 	color: #000;
 	width: 34px;
-	background-color: #fff;	
+	background-color: #fff;
+  cursor: pointer;;
 }
 
 .location-list {
 	margin: 0;
 	padding: 0;
-	list-style: none;	
+	list-style: none;
 }
 
 .location-item {
@@ -85,28 +94,60 @@
 	color: #bbb;
 	font-size: 16px;
 	font-style:normal;
-	height: 48px;
+	height: auto;
 	padding: 12px;
 	padding-left: 12px;
-	border-bottom: 1px solid #333;	
+	border-bottom: 1px solid #333;
 	line-height: 24px;
 	cursor: pointer;
 }
 
 
 #menu-left-sidebar:hover {
-	color: #ccc;	
+	color: #ccc;
 }
 
 
 #map-main-wrapper {
+	top: 0;
 	width: 100%;
 	position: relative;
-	height: calc(100% - 48px);
-	background-color: #bbb;	
+	height: 100%;
+	background-color: #bbb;
 }
 
 #map {
 	width: 100%;
-	height: 100%;	
+	height: 100%;
+}
+
+#pano {
+  width: 200px;
+  height: 200px;
+}
+
+@media screen and (max-width:720px){
+.left-sidebar-wrapper {
+	left: -240px;
+}
+
+.main-wrapper {
+	margin-left: 0;
+	width: 100%;
+	top: 0;
+}
+
+#map-main-wrapper {
+	height: calc(100% - 48px);
+}
+
+.left-sidebar-wrapper.collapsed {
+  left: 0;
+}
+
+.main-wrapper.collapsed {
+  margin-left: 240px;
+  width: calc(100% - 240px);
+}
+
 }
