@@ -229,6 +229,8 @@ function clickListItem() {
       var id = Number(this.id.replace('loc', ''));
       populateInfoWindw(markers[id], infowindow);
       toggleBounce(markers[id]);
+      var textsearch = $('#loc'+id).text();
+      getWiki(textsearch);
     });
   }
 }
@@ -277,8 +279,9 @@ function getWiki(item) {
     async: false,
     success: function (responsive) {
       console.log(responsive);
+      $('.error').remove();
       $('#wiki-main').append(wikiDom);
-      //ko.cleanNode($('.sidebar-content')[0]);
+      ko.cleanNode( $('#wiki-main')[0]);
       ko.applyBindings(new addListWikiModel(responsive), $('#wiki-main')[0]);
     },
     error: function (err) {
@@ -296,7 +299,7 @@ var wikiDom = '<ul id="wiki-list" data-bind="foreach: loadWiki">'+
               '</ul>';
 
 $(document).ready(function () {
-  getWiki('den ngoc son');
+  getWiki('ha noi');
 });
 
 // crate a knocout view is list wikipedia
@@ -353,4 +356,4 @@ function getCurrentTemp() {
   });
 }
 
-getCurrentTemp();
+//getCurrentTemp();
