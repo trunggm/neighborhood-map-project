@@ -87,7 +87,7 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: {lat: 21.027849605476565, lng: 105.85228443145752},
     zoom: 16
-  });
+  }, getMap);
 
   infowindow = new google.maps.InfoWindow();
   bounds = new google.maps.LatLngBounds();
@@ -96,7 +96,9 @@ function initMap() {
   createMarkers(map);
 }
 
-
+function getMap(data, status){
+  console.log(status);
+}
 
 //create marker and push to markers
 function createMarkers(map) {
@@ -375,7 +377,7 @@ function getCurrentTemp(la, lo) {
   }, 60000);
 }
 
-getCurrentTemp(lat, lon);
+//getCurrentTemp(lat, lon);
 
 // view model for temp
 function tempModel(temp) {
