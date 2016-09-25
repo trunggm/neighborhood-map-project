@@ -2,6 +2,8 @@
 // Map view in site
 var map, infowindow, bounds;
 var markers = [];
+var lat = 21.027849605476565;
+var lon = 105.85228443145752;
 
 // List location
 var locations = [
@@ -231,6 +233,8 @@ function clickListItem() {
       var id = Number(this.id.replace('loc', ''));
       populateInfoWindw(markers[id], infowindow);
       toggleBounce(markers[id]);
+      lat = markers[id].location.lat;
+      lng = markers[id].location.lng;
       var textsearch = $('#loc'+id).text();
       getWiki(textsearch);
     });
@@ -338,33 +342,44 @@ $('#wiki-btn').click(function () {
   $('#wiki-btn').toggleClass('collapsed');
 });
 
-
-
-
 /* get temp of location*/
 var hanoiId = '1581129';
 var openWeatherUrl = 'http://api.openweathermap.org/data/2.5/weather';
 var openWeatherKey = '939cd051406d39c8efda478355480df2';
 var ortherKey = 'b1b15e88fa797225412429c1c50c122a1';
-function getCurrentTemp() {
+function getCurrentTemp(la, lo) {
   $.ajax({
     url: openWeatherUrl,
     data: {
       type: 'like',
-      lat: 21.0311149,
-      lon: 105.8524206,
+      lat: la,
+      lon: lo,
       unit: 'metric',
       appid: openWeatherKey,
     },
     type: 'GET',
     success: function (responsive) {
       console.log(responsive);
-      //console.log(responsive.main.temp);
+      console.log(responsive.main.temp);
+      var temp = Math.round(responsive.main.temp - 273.15);
+      ko.cleanNode($('#temp')[0]);
+      ko.applyBindings(new tempModel(temp), $('#temp')[0]);
     },
     error: function (err) {
       console.log(err);
+      $('#temp-number').text('error');
     }
   });
+  setTimeout(function () {
+    getCurrentTemp(lat, lon)
+  }, 60000);
 }
 
-//getCurrentTemp();
+getCurrentTemp(lat, lon);
+
+// view model for temp
+function tempModel(temp) {
+  console.log(temp);
+  var self = this;
+  self.temp = ko.observable(temp+' C');
+}

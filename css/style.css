@@ -208,6 +208,25 @@ hr {
   color: #999;
 }
 
+/* temp css*/
+#temp {
+  position: fixed;
+  width:  auto;
+  height: 48px;
+  color: #eee;
+  background-color: #a3ccff;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  padding: 12px;
+  font-size: 18px;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
 @media screen and (max-width:720px){
 .left-sidebar-wrapper {
 	left: -240px;
