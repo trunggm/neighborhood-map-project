@@ -23,16 +23,14 @@
         <div class="sidebar-main">
         	<!--left sidebar search box-->
           <div class="sidebar-search input-group">
-            <input type="text" class="form-control" placeholder="Search" id="search-box">
-            <span class="input-group-btn" id="search-btn"><i class="fa fa-search"></i></span>
+            <input type="text" class="form-control" placeholder="Search" id="search-box" data-bind="value: searchItem">
+            <span class="input-group-btn" id="search-btn" data-bind="click: search"><i class="fa fa-search"></i></span>
           </div>
 
           <!--left sidebar list locations-->
           <div class="sidebar-content">
             <ul class="location-list" data-bind="foreach: loadList">
-            	<li class="location-item" data-bind="text: name, attr: {id: 'loc' + idItem()}">
-                	sieu nhan
-                </li>
+            	<li class="location-item" data-bind="text: name, attr: {id: 'loc' + idItem()}, visible: visibleItem"></li>
             </ul>
           </div>
        	</div>
@@ -56,13 +54,11 @@
     <div id="wiki-main" class="right-sidebar-wrapper collapsed">
       <h2 class="wiki-title">Wikipedia</h2>
       <hr>
-      <!--
       <ul id="wiki-list" data-bind="foreach: loadWiki">
-        <li class="wiki-item">
+        <li class="wiki-item" data-bind="attr: {id: id}">
           <a target="_blank" data-bind="text: wikiName, attr: {href: wikiUrl()}"></a>
         </li>
       </ul>
-      -->
     </div>
 
     <div id="temp">

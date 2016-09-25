@@ -208,24 +208,45 @@ function hideMarker(marker) {
   marker.setMap(null);
 }
 
-// knockout js view model
-function addListItem(name, id) {
+/* knockout js view model for list location */
+function AddListItem(name, id) {
   var self = this;
   self.name = name;
   self.idItem = ko.observable(id);
+  self.visibleItem = ko.observable(true);
 }
 
-var listItem = [];
-for (var i = 0; i < locations.length; i++) {
-  listItem.push(new addListItem(locations[i].title, i));
-}
-
-function addListItemModel (listItem) {
+function AddListItemModel () {
   var self = this;
+  this.searchItem = ko.observable('');
+  var listItem = [];
+
+  for (var i = 0; i < locations.length; i++) {
+    listItem.push(new AddListItem(locations[i].title, i));
+  }
+
   self.loadList = ko.observableArray(listItem);
+
+  // search function
+  self.search = function () {
+    var list = this.loadList();
+    var searchItem = this.searchItem().toLowerCase();
+    for (var i = 0; i < list.length; i++) {
+      var textItem = list[i].name.toLowerCase();
+      if (textItem.search(searchItem) != -1) {
+        list[i].visibleItem(true);
+      }
+      else {
+        list[i].visibleItem(false);
+      }
+    }
+    this.loadList = ko.observableArray(list);
+  }
 }
 
-ko.applyBindings(new addListItemModel(listItem), $('.sidebar-content')[0]);
+var locationModel = new AddListItemModel();
+ko.applyBindings(locationModel, $('.sidebar-main')[0]);
+console.log(locationModel.loadList());
 clickListItem();
 
 function clickListItem() {
@@ -237,36 +258,29 @@ function clickListItem() {
       toggleBounce(markers[id]);
       lat = markers[id].location.lat;
       lng = markers[id].location.lng;
-      var textsearch = $('#loc'+id).text();
-      getWiki(textsearch);
+      // get text from view model
+      var searchItem = locationModel.loadList()[id].name();
+      getWiki(searchItem);
     });
   }
 }
 
 // search box
 $('#search-btn').click(function () {
-  var listSearchItem = [];
   var searchItem = $('#search-box').val().toLowerCase();
   for (var i = 0; i < locations.length; i++) {
     var title = locations[i].title.toLowerCase();
     if (title.search(searchItem) != -1) {
-      $('#loc'+i).show();
       showMarker(markers[i], map);
       bounds.extend(markers[i].position);
-      listSearchItem.push(new addListItem(locations[i].title, i));
+
     }
     else {
-      $('#loc'+i).hide();
       hideMarker(markers[i]);
     }
   }
   map.fitBounds(bounds);
-  ko.cleanNode($('.sidebar-content')[0]);
-  ko.applyBindings(new addListItemModel([]), $('.sidebar-content')[0]);
-  $('.location-list').append('<li class="location-item" data-bind="text: name, attr: {id: \'loc\''+' + idItem()}">'+'sieu nhan</li>');
-  ko.cleanNode($('.sidebar-content')[0]);
-  ko.applyBindings(new addListItemModel(listSearchItem), $('.sidebar-content')[0]);
-  clickListItem();
+
 });
 
 
@@ -295,11 +309,7 @@ function getWiki(item) {
     async: false,
     success: function (responsive) {
       console.log(responsive);
-      $('#wiki-list').remove();
-      $('.error').remove();
-      $('#wiki-main').append(wikiDom);
-      ko.cleanNode( $('#wiki-main')[0]);
-      ko.applyBindings(new addListWikiModel(responsive), $('#wiki-main')[0]);
+      wikiModel.loadListWiki(responsive);
     },
     error: function (err) {
       console.log(err);
@@ -308,36 +318,41 @@ function getWiki(item) {
   });
 }
 
-//
-var wikiDom = '<ul id="wiki-list" data-bind="foreach: loadWiki">'+
-                '<li class="wiki-item" data-bind="attr: {id: id()}">'+
-                  '<a class="wiki-link" target="_blank" data-bind="text: wikiName, attr: {href: wikiUrl()}"></a>'+
-                '</li>'+
-              '</ul>';
-
 $(document).ready(function () {
   getWiki('ha noi');
 });
 
-// crate a knocout view is list wikipedia
-function addWikiItem(id, name, url) {
-  console.log(id, name, url);
-  console.log(url);
+/* crate a knockout view is list wikipedia */
+function AddWikiItem(id, name, url) {
   var self = this;
   self.id = ko.observable(id);
   self.wikiName = name;
   self.wikiUrl = ko.observable(url);
 }
 
-function addListWikiModel(wikiList) {
+var wikiList = [[], [], []];
+
+function AddListWikiModel() {
   console.log(wikiList[1].length);
   var self = this;
   var listItem = [];
   for (var i = 0; i < wikiList[1].length; i++) {
-    listItem.push(new addWikiItem(i, wikiList[1][i], wikiList[3][i]));
+    listItem.push(new AddWikiItem(i, wikiList[1][i], wikiList[3][i]));
   }
   self.loadWiki = ko.observableArray(listItem);
+
+  this.loadListWiki = function (list) {
+    var listItems = [];
+    for (var i = 0; i < list[1].length; i++) {
+      listItems.push(new AddWikiItem(i, list[1][i], list[3][i]));
+    }
+    self.loadWiki(listItems);
+  }
 }
+
+var wikiModel = new AddListWikiModel();
+
+ko.applyBindings(wikiModel, $('#wiki-main')[0]);
 
 $('#wiki-btn').click(function () {
   $('.right-sidebar-wrapper').toggleClass('collapsed');
@@ -361,27 +376,30 @@ function getCurrentTemp(la, lo) {
     },
     type: 'GET',
     success: function (responsive) {
-      console.log(responsive);
-      console.log(responsive.main.temp);
       var temp = Math.round(responsive.main.temp - 273.15);
-      ko.cleanNode($('#temp')[0]);
-      ko.applyBindings(new tempModel(temp), $('#temp')[0]);
+      currentTempModel.temp(temp + ' C');
     },
     error: function (err) {
       console.log(err);
       $('#temp-number').text('error');
     }
   });
+
+  // update current temp every minus
   setTimeout(function () {
     getCurrentTemp(lat, lon)
   }, 60000);
 }
 
-//getCurrentTemp(lat, lon);
+getCurrentTemp(lat, lon);
 
 // view model for temp
-function tempModel(temp) {
-  console.log(temp);
+function TempModel(temp) {
   var self = this;
-  self.temp = ko.observable(temp+' C');
+  var temp = 25;
+  self.temp = ko.observable(temp + ' C');
 }
+
+var currentTempModel = new TempModel();
+
+ko.applyBindings(currentTempModel, $('#temp')[0]);
